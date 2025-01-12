@@ -1,0 +1,27 @@
+{
+  "name": "examensfib",
+  "version": "1.0.0",
+  "description": "Pàgina web que ofereix als estudiants de la FIB (UPC) els exàmens de totes les materies. Els exercicis es troben dividits per temes i tots ells compten amb les solucions. Tot en un únic lloc, més sencill.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start:backend": "node backend/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikipm/examensfib.git"
+  },
+  "author": "Ikipm",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ikipm/examensfib/issues"
+  },
+  "homepage": "https://github.com/ikipm/examensfib#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.9.4"
+  }
+}
