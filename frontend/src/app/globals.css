@@ -2,10 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --primary: #b32d2d;  /* Color principal */
   --secondary: #ff914f; /* Color secundari */
+}
+
+body {
+  font-family: "Poppins", sans-serif;
 }
 
 .bg-primary {
