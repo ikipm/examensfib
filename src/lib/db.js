@@ -3,7 +3,7 @@ import Subject from '@/models/Subject';
 import Content from '@/models/Content';
 import Exercise from '@/models/Exercise';
 
-const MONGODB_URI = "mongodb://localhost:27017/examensfib";
+const MONGODB_URI = process.env.MONGODB_URI;
 
 let cached = global.mongoose;
 
