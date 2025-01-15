@@ -7,8 +7,8 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 w-full bg-white shadow z-50">
-      <div className="max-w-[1200px] mx-auto px-4 py-3 flex items-center justify-between">
+    <nav className="sticky top-0 w-full bg-white shadow z-50">
+      <div className="max-w-[1500px] mx-auto px-4 py-3 flex items-center justify-between">
         <div className="font-bold text-2xl text-primary">examensfib.cat</div>
         <button
           className="md:hidden text-gray-600"
