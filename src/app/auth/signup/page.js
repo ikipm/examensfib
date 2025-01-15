@@ -3,9 +3,15 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function Signup() {
   const router = useRouter();
+  const { data: session, status } = useSession();
+  if (status === "authenticated") {
+    router.push("/");
+  }
+
   const [formData, setFormData] = useState({
     name: "",
     username: "",

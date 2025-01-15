@@ -5,7 +5,7 @@ import connectToDatabase from "@/lib/db";
 import User from "@/models/User";
 
 // Define your NextAuth configuration
-const authOptions = {
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -37,6 +37,7 @@ const authOptions = {
         return {
           id: user._id.toString(),
           name: user.name,
+          username: user.username,
           email: user.email,
           permissions: user.permissions,
         };

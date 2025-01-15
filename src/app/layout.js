@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Add from "./components/Add";
+import { SessionWrapper } from "./components/SessionWrapper";
 
 // Import Poppins font
 const poppins = Poppins({
@@ -16,18 +17,15 @@ export const metadata = {
   description: "Tots els exàmens de la FIB en un sol lloc",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children, session }) {
   return (
     <html lang="ca" className="h-full">
       <body className={`${poppins.variable} antialiased h-full flex flex-col bg-gray-100`}>
-        {/* Navbar */}
-        <Navbar />
-
-        {/* Main content */}
-        <main className="flex-grow">{children}</main>
-        <Add />
-
-        {/* Footer */}
+        <SessionWrapper session={session}>
+          <Navbar />
+          <main className="flex-grow">{children}</main>
+          <Add />
+        </SessionWrapper>
         <Footer />
       </body>
     </html>

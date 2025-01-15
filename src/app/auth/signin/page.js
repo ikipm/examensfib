@@ -1,12 +1,16 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function SignInForm() {
   const router = useRouter();
+  const { data: session, status } = useSession();
+  if (status === "authenticated") {
+    router.push("/");
+  }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
