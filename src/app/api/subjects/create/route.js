@@ -47,7 +47,7 @@ export async function POST(request) {
             url,
             course: Number(course),
             color,
-            icon: "",
+            icon: "icon.png",
             contents: [],
             exercises: [],
         });
