@@ -9,7 +9,9 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 w-full bg-white shadow z-50">
       <div className="max-w-[1500px] mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="font-bold text-2xl text-primary">examensfib.cat</div>
+        <Link href="/">
+          <div className="font-bold text-2xl text-primary">examensfib.cat</div>
+        </Link>
         <button
           className="md:hidden text-gray-600"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -37,9 +39,9 @@ export default function Navbar() {
             </a>
           </li>
           <li>
-            <button className="bg-primary text-white px-4 py-2 rounded hover:bg-red-800">
+            <Link href="/auth/signin" className="bg-primary text-white px-4 py-2 rounded hover:bg-red-800">
               Inicia sessió
-            </button>
+            </Link>
           </li>
         </ul>
       </div>
