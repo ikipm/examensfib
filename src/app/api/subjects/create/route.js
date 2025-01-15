@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+//import fs from "fs";
+//import path from "path";
 import connectToDatabase from '@/lib/db';
 import Subject from "@/models/Subject";
 import Content from "@/models/Content";
@@ -25,7 +25,7 @@ export async function POST(request) {
         const course = formData.get("course");
         const contentsData = formData.get("contents") ? JSON.parse(formData.get("contents")) : [];
 
-        const uploadDir = path.join(process.cwd(), `/public/img/${url}/`);
+        //const uploadDir = path.join(process.cwd(), `/public/img/${url}/`);
 
         /*if (!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir, { recursive: true });
@@ -47,7 +47,7 @@ export async function POST(request) {
             url,
             course: Number(course),
             color,
-            icon: iconPath,
+            icon: "",
             contents: [],
             exercises: [],
         });
