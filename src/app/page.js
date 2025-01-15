@@ -4,8 +4,6 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 function App() {
-  // For the accordion
-  const [openAccordion, setOpenAccordion] = useState(null);
   // For the search bar
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -37,11 +35,6 @@ function App() {
       subj.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
-
-  const handleToggleAccordion = (id) => {
-    setOpenAccordion((prev) => (prev === id ? null : id));
-  };
-
   return (
     <div className="font-sans text-gray-800 bg-gray-100 min-h-screen">
       {/* HERO */}
@@ -147,19 +140,9 @@ function App() {
         </div>
 
         {/* Acordió: Primer curs */}
-        <div
-          className={`accordion-item mb-4 rounded shadow bg-white overflow-hidden ${
-            openAccordion === 1 ? "active" : ""
-          }`}
-        >
-          <div
-            className="accordion-header cursor-pointer px-4 py-2 flex justify-between items-center bg-secondary text-white"
-            onClick={() => handleToggleAccordion(1)}
-          >
+        <div className="accordion-item mb-4 rounded shadow bg-white overflow-hidden active">
+          <div className="accordion-header px-4 py-2 flex justify-between items-center bg-secondary text-white">
             <h3 className="text-lg font-semibold">Primer curs</h3>
-            <span className="accordion-icon font-bold transition-transform">
-              ›
-            </span>
           </div>
           <div className="accordion-body px-4 py-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-2">
@@ -178,7 +161,8 @@ function App() {
                       alt="icona"
                       className="w-20 h-20 object-cover m-4 rounded-full"
                       onError={(e) => {
-                        e.currentTarget.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn7fnmUG1BtaOkrHLj8t3jVnPbevmNMJv5i2GAyXOEz7AVaXUjcaMw8l_pXK9txKDACZQ";
+                        e.currentTarget.src =
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn7fnmUG1BtaOkrHLj8t3jVnPbevmNMJv5i2GAyXOEz7AVaXUjcaMw8l_pXK9txKDACZQ";
                       }}
                     />
                     <div className="p-4 flex-1">
@@ -197,19 +181,9 @@ function App() {
         </div>
 
         {/* Acordió: Segon curs */}
-        <div
-          className={`accordion-item mb-4 rounded shadow bg-white overflow-hidden ${
-            openAccordion === 2 ? "active" : ""
-          }`}
-        >
-          <div
-            className="accordion-header cursor-pointer px-4 py-2 flex justify-between items-center bg-secondary text-white"
-            onClick={() => handleToggleAccordion(2)}
-          >
+        <div className="accordion-item mb-4 rounded shadow bg-white overflow-hidden active">
+          <div className="accordion-header px-4 py-2 flex justify-between items-center bg-secondary text-white">
             <h3 className="text-lg font-semibold">Segon curs</h3>
-            <span className="accordion-icon font-bold transition-transform">
-              ›
-            </span>
           </div>
           <div className="accordion-body px-4 py-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-2">
@@ -224,13 +198,17 @@ function App() {
                     key={item._id || idx}
                   >
                     <img
-                      src={item.img || "https://via.placeholder.com/100"}
+                      src={item.icon}
                       alt="icona"
                       className="w-20 h-20 object-cover m-4 rounded-full"
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn7fnmUG1BtaOkrHLj8t3jVnPbevmNMJv5i2GAyXOEz7AVaXUjcaMw8l_pXK9txKDACZQ";
+                      }}
                     />
                     <div className="p-4 flex-1">
                       <h4 className="card-title text-lg font-semibold mb-2 text-gray-800">
-                        {item.name}
+                        {item.name} - {item.url.toUpperCase()}
                       </h4>
                       <p className="card-description text-sm text-gray-600 mb-2">
                         {item.description}
@@ -244,19 +222,9 @@ function App() {
         </div>
 
         {/* Acordió: Tercer curs */}
-        <div
-          className={`accordion-item mb-4 rounded shadow bg-white overflow-hidden ${
-            openAccordion === 3 ? "active" : ""
-          }`}
-        >
-          <div
-            className="accordion-header cursor-pointer px-4 py-2 flex justify-between items-center bg-secondary text-white"
-            onClick={() => handleToggleAccordion(3)}
-          >
+        <div className="accordion-item mb-4 rounded shadow bg-white overflow-hidden active">
+          <div className="accordion-header px-4 py-2 flex justify-between items-center bg-secondary text-white">
             <h3 className="text-lg font-semibold">Tercer curs</h3>
-            <span className="accordion-icon font-bold transition-transform">
-              ›
-            </span>
           </div>
           <div className="accordion-body px-4 py-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-2">
@@ -271,13 +239,17 @@ function App() {
                     key={item._id || idx}
                   >
                     <img
-                      src={item.img || "https://via.placeholder.com/100"}
+                      src={item.icon}
                       alt="icona"
                       className="w-20 h-20 object-cover m-4 rounded-full"
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn7fnmUG1BtaOkrHLj8t3jVnPbevmNMJv5i2GAyXOEz7AVaXUjcaMw8l_pXK9txKDACZQ";
+                      }}
                     />
                     <div className="p-4 flex-1">
                       <h4 className="card-title text-lg font-semibold mb-2 text-gray-800">
-                        {item.name}
+                        {item.name} - {item.url.toUpperCase()}
                       </h4>
                       <p className="card-description text-sm text-gray-600 mb-2">
                         {item.description}
@@ -291,19 +263,9 @@ function App() {
         </div>
 
         {/* Acordió: Quart curs */}
-        <div
-          className={`accordion-item mb-4 rounded shadow bg-white overflow-hidden ${
-            openAccordion === 4 ? "active" : ""
-          }`}
-        >
-          <div
-            className="accordion-header cursor-pointer px-4 py-2 flex justify-between items-center bg-secondary text-white"
-            onClick={() => handleToggleAccordion(4)}
-          >
+        <div className="accordion-item mb-4 rounded shadow bg-white overflow-hidden active">
+          <div className="accordion-header px-4 py-2 flex justify-between items-center bg-secondary text-white">
             <h3 className="text-lg font-semibold">Quart curs</h3>
-            <span className="accordion-icon font-bold transition-transform">
-              ›
-            </span>
           </div>
           <div className="accordion-body px-4 py-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-2">
@@ -318,13 +280,17 @@ function App() {
                     key={item._id || idx}
                   >
                     <img
-                      src={item.img || "https://via.placeholder.com/100"}
+                      src={item.icon}
                       alt="icona"
                       className="w-20 h-20 object-cover m-4 rounded-full"
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn7fnmUG1BtaOkrHLj8t3jVnPbevmNMJv5i2GAyXOEz7AVaXUjcaMw8l_pXK9txKDACZQ";
+                      }}
                     />
                     <div className="p-4 flex-1">
                       <h4 className="card-title text-lg font-semibold mb-2 text-gray-800">
-                        {item.name}
+                        {item.name} - {item.url.toUpperCase()}
                       </h4>
                       <p className="card-description text-sm text-gray-600 mb-2">
                         {item.description}
