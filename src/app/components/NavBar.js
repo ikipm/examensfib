@@ -51,14 +51,14 @@ export default function Navbar() {
             <>
               <li>
                 {/* Display username or any user info here */}
-                <span className="text-gray-600">
+                <span className="text-gray-600 mr-2">
                   Benvingut, {session.user.name}
                 </span>
               </li>
               <li>
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="bg-red-600 text-white px-4 py-2 rounded"
+                  className="bg-primary text-white px-4 py-2 rounded"
                 >
                   Logout
                 </button>
@@ -68,7 +68,7 @@ export default function Navbar() {
             <li>
               <Link
                 href="/auth/signin"
-                className="bg-primary text-white px-4 py-2 rounded hover:bg-red-800"
+                className="bg-primary text-white px-4 py-2 rounded"
               >
                 Inicia sessió
               </Link>
