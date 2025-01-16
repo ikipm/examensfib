@@ -1,31 +1,56 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import AdminMenu from "@/app/components/AdminMenu";
 
 function ExercisePage() {
   const [exercise, setExercise] = useState(null);
   const [error, setError] = useState(null);
   const [solutionsVisible, setSolutionsVisible] = useState(false);
+  const [sortedExercises, setSortedExercises] = useState([]);
+  const [previousId, setPreviousId] = useState(null);
+  const [nextId, setNextId] = useState(null);
 
   const params = useParams();
   const { subject, contentId, exerciseId } = params;
   const router = useRouter();
 
   useEffect(() => {
-    const fetchExercise = async () => {
+    const fetchExerciseData = async () => {
       try {
-        const res = await fetch(`/api/exercises/${exerciseId}`);
+        const res = await fetch(`/api/subjects/${subject}`);
         const data = await res.json();
-        setExercise(data.exercise);
+
+        const allExercises = data.subject.exercises.filter(
+          (ex) => ex.content === contentId
+        );
+
+        const sorted = allExercises.sort((a, b) => {
+          if (b.year !== a.year) return b.year - a.year;
+          return b.quarter - a.quarter;
+        });
+
+        setSortedExercises(sorted);
+
+        const currentIndex = sorted.findIndex((ex) => ex._id === exerciseId);
+        setPreviousId(currentIndex > 0 ? sorted[currentIndex - 1]._id : null);
+        setNextId(
+          currentIndex < sorted.length - 1 ? sorted[currentIndex + 1]._id : null
+        );
+
+        // Fetch the current exercise details
+        const exerciseRes = await fetch(`/api/exercises/${exerciseId}`);
+        const exerciseData = await exerciseRes.json();
+        setExercise(exerciseData.exercise);
       } catch (err) {
         setError(`Error fetching exercise: ${err.message}`);
         console.error(err);
       }
     };
 
-    fetchExercise();
-  }, [exerciseId]);
+    fetchExerciseData();
+  }, [subject, contentId, exerciseId]);
 
   const handlePrevious = () => {
     if (exercise && exercise.previousId) {
@@ -78,12 +103,18 @@ function ExercisePage() {
   return (
     <div className="flex flex-col font-sans bg-gray-100 text-gray-800">
       {/* Header */}
-      <header className="text-white py-8" style={{ backgroundColor: exercise.subject.color || "#b32d2d" }}>
+      <header
+        className="text-white py-8"
+        style={{ backgroundColor: exercise.subject.color || "#b32d2d" }}
+      >
         <div className="max-w-4xl mx-auto text-center px-4">
           <h1 className="text-3xl md:text-4xl font-extrabold mb-4 tracking-tight">
             {exercise.subject.name}
           </h1>
-          <span className="inline-block bg-white px-4 py-1 rounded-full text-sm font-semibold" style={{ color: exercise.subject.color || "#b32d2d" }}>
+          <span
+            className="inline-block bg-white px-4 py-1 rounded-full text-sm font-semibold"
+            style={{ color: exercise.subject.color || "#b32d2d" }}
+          >
             {exercise.subject.url.toUpperCase()}
           </span>
         </div>
@@ -145,31 +176,33 @@ function ExercisePage() {
           {/* Navigation Buttons */}
           <nav className="mt-8 flex justify-center space-x-4">
             {/* Previous Button */}
-            <button
-              type="button"
-              onClick={handlePrevious}
-              style={{ backgroundColor: exercise.subject.color || "#b32d2d" }}
-              className="flex items-center text-white
-                         focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg 
-                         text-sm py-3 px-6"
-            >
-              <svg
-                className="w-5 h-5 transform rotate-180 mr-2"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 10"
+            {previousId && (
+              <Link
+                href={`/subject/${subject}/${contentId}/${previousId}`}
+                onClick={handlePrevious}
+                style={{ backgroundColor: exercise.subject.color || "#b32d2d" }}
+                className="flex items-center text-white
+                          focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg 
+                          text-sm py-3 px-6"
               >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M1 5h12m0 0L9 1m4 4L9 9"
-                />
-              </svg>
-              Anterior
-            </button>
+                <svg
+                  className="w-5 h-5 transform rotate-180 mr-2"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M1 5h12m0 0L9 1m4 4L9 9"
+                  />
+                </svg>
+                Anterior
+              </Link>
+            )}
 
             {/* Middle Button */}
             <button
@@ -187,31 +220,33 @@ function ExercisePage() {
             </button>
 
             {/* Next Button */}
-            <button
-              type="button"
-              onClick={handleNext}
-              style={{ backgroundColor: exercise.subject.color || "#b32d2d" }}
-              className="flex items-center text-white
-                         focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg 
-                         text-sm py-3 px-6"
-            >
-              Següent
-              <svg
-                className="w-5 h-5 ml-2"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 10"
+            {nextId && (
+              <Link
+                href={`/subject/${subject}/${contentId}/${nextId}`}
+                onClick={handleNext}
+                style={{ backgroundColor: exercise.subject.color || "#b32d2d" }}
+                className="flex items-center text-white
+                          focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg 
+                          text-sm py-3 px-6"
               >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M1 5h12m0 0L9 1m4 4L9 9"
-                />
-              </svg>
-            </button>
+                Següent
+                <svg
+                  className="w-5 h-5 ml-2"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M1 5h12m0 0L9 1m4 4L9 9"
+                  />
+                </svg>
+              </Link>
+            )}
           </nav>
         </section>
       </main>
