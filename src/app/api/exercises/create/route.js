@@ -80,6 +80,7 @@ export async function POST(request) {
     return NextResponse.json({
       message: "Exercise created successfully",
       exerciseId: newExercise._id,
+      contentId: newExercise.content,
     });
   } catch (error) {
     console.error("Error creating exercise:", error);

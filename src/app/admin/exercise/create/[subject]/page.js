@@ -1,8 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function CreateExercisePage() {
+  const router = useRouter();
   const params = useParams();
   const subjectSlug = params.subject;
 
@@ -55,8 +57,7 @@ export default function CreateExercisePage() {
       });
       if (!response.ok) throw new Error("Failed to create exercise");
       const data = await response.json();
-      // Redirigeix a la pàgina de l'exercici acabat de crear
-      window.location.href = `/subject/${subjectSlug}/${data.exerciseId}`;
+      router.push(`/subject/${subjectSlug}/${data.contentId}/${data.exerciseId}`);
     } catch (err) {
       console.error(err);
     }
@@ -259,7 +260,8 @@ export default function CreateExercisePage() {
                 <button
                   type="button"
                   onClick={() => setSolutionsVisible(!solutionsVisible)}
-                  className="text-white bg-primary
+                  style={{ backgroundColor: subject ? subject.color : "#b32d2d" }}
+                  className="text-white
                              focus:ring-4 focus:outline-none focus:ring-red-300 
                              font-medium rounded-lg text-sm py-2 px-4"
                 >
