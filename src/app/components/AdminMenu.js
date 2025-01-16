@@ -65,7 +65,7 @@ export default function AdminMenu({
 
       {/* Main Button */}
       <Link
-        href="/admin/subject/create"
+        href={subjectUrl ? `/admin/exercise/create/${subjectUrl}` : "/admin/subject/create"}
         aria-controls="speed-dial-menu-default"
         aria-expanded="false"
         style={{ backgroundColor: mainButtonColor }}

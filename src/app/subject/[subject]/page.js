@@ -65,12 +65,18 @@ function SubjectPage() {
   return (
     <div className="font-sans text-gray-800 bg-gray-100">
       {/* Header */}
-      <header className="text-white py-8" style={{ backgroundColor: subject.color || "#b32d2d" }}>
+      <header
+        className="text-white py-8"
+        style={{ backgroundColor: subject.color || "#b32d2d" }}
+      >
         <div className="max-w-4xl mx-auto text-center px-4">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
             {subject.name}
           </h1>
-          <span className="inline-block bg-white px-4 py-1 rounded-full font-semibold mb-4" style={{ color: subject.color || "#b32d2d" }}>
+          <span
+            className="inline-block bg-white px-4 py-1 rounded-full font-semibold mb-4"
+            style={{ color: subject.color || "#b32d2d" }}
+          >
             {subject.url.toUpperCase()}
           </span>
           <p className="text-lg font-normal">{subject.description}</p>
@@ -79,55 +85,61 @@ function SubjectPage() {
 
       {/* Main Content */}
       <main className="max-w-[1200px] mx-auto py-12 px-4">
-        <h2 className="text-2xl font-bold text-primary mb-6">Contingut</h2>
+        <h2
+          className="text-2xl font-bold mb-6"
+          style={{ color: subject.color || "#b32d2d" }}
+        >
+          Contingut
+        </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
           {subject.contents && subject.contents.length > 0 ? (
             subject.contents.map((content) => {
-                // Filter exercises that match the current content ID
-                const matchingExercises = subject.exercises.filter(
+              // Filter exercises that match the current content ID
+              const matchingExercises = subject.exercises.filter(
                 (exercise) => exercise.content === content._id
-                );
-        
-                if (matchingExercises.length > 0) {
+              );
+
+              if (matchingExercises.length > 0) {
                 // Sort them by createdAt in descending order to get the latest first
                 const latestExercise = matchingExercises.sort(
                   (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
                 )[0];
-        
+
                 const exerciseId = latestExercise._id;
-        
+
                 return (
                   <Link
-                  key={content._id}
-                  href={`/subject/${subject.url}/${exerciseId}`}
-                  className="content-item"
+                    key={content._id}
+                    href={`/subject/${subject.url}/${exerciseId}`}
+                    className="content-item"
                   >
-                  <div className="bg-white rounded shadow hover:-translate-y-1 transition-transform p-4">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                    {content.title}
-                    </h3>
-                    <p className="text-sm text-gray-600">
-                    {content.description || "No hi ha descripció disponible."}
-                    </p>
-                  </div>
+                    <div className="bg-white rounded shadow hover:-translate-y-1 transition-transform p-4">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                        {content.title}
+                      </h3>
+                      <p className="text-sm text-gray-600">
+                        {content.description ||
+                          "No hi ha descripció disponible."}
+                      </p>
+                    </div>
                   </Link>
                 );
-                } else {
+              } else {
                 return (
                   <div
-                  key={content._id}
-                  className="content-item bg-gray-200 rounded p-4 cursor-not-allowed opacity-50"
+                    key={content._id}
+                    className="content-item bg-gray-200 rounded p-4 cursor-not-allowed opacity-50"
                   >
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                    {content.title}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {content.description || "No hi ha descripció disponible."}
-                  </p>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                      {content.title}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {content.description || "No hi ha descripció disponible."}
+                    </p>
                   </div>
                 );
-                }
+              }
             })
           ) : (
             <p className="text-gray-500">
