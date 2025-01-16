@@ -63,9 +63,15 @@ export default function SubjectPage() {
     );
   }
 
-  const matchingExercises = subject.exercises.filter(
-    (exercise) => exercise.content === contentId
-  );
+  const matchingExercises = subject.exercises
+  .filter((exercise) => exercise.content === contentId)
+  .sort((a, b) => {
+    if (b.year !== a.year) {
+      return b.year - a.year;
+    }
+    return b.quarter - a.quarter;
+  });
+
   const content = subject.contents.find(
     (item) => item._id.toString() === contentId
   );
