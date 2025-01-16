@@ -46,7 +46,7 @@ export default function CreateSubjectPage() {
     });*/
 
     try {
-      const response = await fetch("/api/subjects/create", {
+      const response = await fetch("/api/admin/subjects/create", {
         method: "POST",
         body: formData,
       });

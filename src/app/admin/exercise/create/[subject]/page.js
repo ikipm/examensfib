@@ -51,7 +51,7 @@ export default function CreateExercisePage() {
     formData.append("solutionImage", solutionImage);
 
     try {
-      const response = await fetch(`/api/exercises/create`, {
+      const response = await fetch(`/api/admin/exercises/create`, {
         method: "POST",
         body: formData,
       });

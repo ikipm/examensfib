@@ -100,7 +100,7 @@ export default function EditSubjectPage() {
 
     try {
       // Assuming an update endpoint that uses PUT or POST for updates
-      const response = await fetch(`/api/subjects/edit/`, {
+      const response = await fetch(`/api/admin/subjects/edit/`, {
         method: "PUT",
         body: formData,
       });
