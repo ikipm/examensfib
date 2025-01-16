@@ -48,7 +48,7 @@ export default function Signup() {
     if (!res.ok) {
       setError(data.message || "Something went wrong");
     } else {
-      router.push("/");
+      router.push("/auth/signin");
     }
   };
 

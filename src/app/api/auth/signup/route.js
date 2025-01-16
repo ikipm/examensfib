@@ -42,13 +42,6 @@ export async function POST(request) {
       password: hashedPassword,
     });
 
-    // Login user
-    const result = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
-
     // Respond with success message (avoid sending sensitive data)
     return NextResponse.json(
       {
