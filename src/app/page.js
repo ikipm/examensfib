@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import AdminMenu from "./components/AdminMenu";
 
 function App() {
   // For the search bar
@@ -64,7 +65,7 @@ function App() {
             </a>
             <a
               href="#com-funciona"
-              className="border-2 border-white bg-transparent text-white px-4 py-2 rounded font-semibold hover:bg-white hover:text-primary transition-colors"
+              className="border-2 border-white bg-transparent text-white px-4 py-2 rounded font-semibold hover:bg-white hover:text-red-800 transition-colors"
             >
               Com funciona?
             </a>
@@ -322,6 +323,7 @@ function App() {
           </a>
         </div>
       </section>
+      <AdminMenu />
     </div>
   );
 }

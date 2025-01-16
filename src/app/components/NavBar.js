@@ -37,7 +37,7 @@ export default function Navbar() {
               href="/#assignatures"
               className="text-gray-600 hover:text-primary"
             >
-              Exàmens
+              Assignatures
             </Link>
           </li>
           <li>

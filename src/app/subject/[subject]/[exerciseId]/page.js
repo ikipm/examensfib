@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
+import AdminMenu from "@/app/components/AdminMenu";
 
 function ExercisePage() {
   const [exercise, setExercise] = useState(null);
@@ -211,6 +212,7 @@ function ExercisePage() {
           </nav>
         </section>
       </main>
+      <AdminMenu mainButtonColor={subject.color} subjectUrl={subject.url} />
     </div>
   );
 }

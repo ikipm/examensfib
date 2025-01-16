@@ -4,6 +4,7 @@ import Navbar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Add from "./components/Add";
 import { SessionWrapper } from "./components/SessionWrapper";
+import 'flowbite';
 
 // Import Poppins font
 const poppins = Poppins({

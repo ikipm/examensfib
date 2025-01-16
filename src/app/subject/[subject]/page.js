@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import AdminMenu from "@/app/components/AdminMenu";
 
 function SubjectPage() {
   const [subject, setSubject] = useState(null);
@@ -135,6 +136,7 @@ function SubjectPage() {
           )}
         </div>
       </main>
+      <AdminMenu mainButtonColor={subject.color} subjectUrl={subject.url} />
     </div>
   );
 }
