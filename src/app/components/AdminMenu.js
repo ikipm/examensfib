@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 export default function AdminMenu({
   mainButtonColor = "#b32d2d",
   subjectUrl,
-  contentId,
+  exerciseId,
 }) {
   const { data: session } = useSession();
 
@@ -20,13 +20,13 @@ export default function AdminMenu({
         id="speed-dial-menu-default"
         className="flex flex-col items-center mb-4 space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
       >
-        {contentId && (
+        {exerciseId && (
           <Link
-            href={`/admin/content/edit/${contentId}`}
+            href={`/admin/exercise/edit/${exerciseId}`}
             className="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400"
           >
             <svg
-              class="w-4 h-4"
+              className="w-4 h-4"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"

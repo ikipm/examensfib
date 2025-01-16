@@ -1,38 +1,44 @@
 "use client";
 
 import { signIn, useSession } from "next-auth/react";
-import { useState } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function SignInForm() {
   const router = useRouter();
   const { data: session, status } = useSession();
-  if (status === "authenticated") {
-    router.push("/");
-  }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    if (status === "authenticated") {
+      // Redirect after authentication
+      router.push("/");
+    }
+  }, [status, router]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
 
-    const result = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
-
-    if (result.error) {
-      // Handle error (e.g., show a message to the user)
-      console.error(result.error);
-    } else {
-      // If has no previous page, redirect to the home page
-      if (router.asPath === "/auth/signin") {
-        router.push("/");
+      if (result.error) {
+        console.error(result.error);
       } else {
-        router.back();
+        // If has no previous page, redirect to the home page
+        if (router.asPath === "/auth/signin") {
+          router.push("/");
+        } else {
+          router.back();
+        }
       }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
     }
   };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
@@ -8,10 +8,6 @@ import { useSession } from "next-auth/react";
 export default function Signup() {
   const router = useRouter();
   const { data: session, status } = useSession();
-  if (status === "authenticated") {
-    router.push("/");
-  }
-
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -20,6 +16,12 @@ export default function Signup() {
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({

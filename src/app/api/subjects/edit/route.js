@@ -17,7 +17,8 @@ export async function PUT(request) {
 
   try {
     await connectToDatabase();
-    // Find the existing subject
+
+    // Find the existing subject using findOne for a single document
     const subject = await Subject.findOne({ url: formData.get("url") });
     if (!subject) {
       return NextResponse.json({ error: "Subject not found" }, { status: 404 });
@@ -54,20 +55,49 @@ export async function PUT(request) {
       subject.icon = `/img/${url}/${url}${fileExt}`;
     }
 
-    // Remove existing contents associated with the subject
-    await Content.deleteMany({ subject: subject._id });
-    subject.contents = [];
+    // Fetch existing contents from the database
+    const existingContents = await Content.find({ subject: subject._id });
 
-    // Create and associate new content documents
+    // Create a map of existing contents for easy lookup
+    const existingContentsMap = new Map();
+    existingContents.forEach(content => {
+      existingContentsMap.set(content._id.toString(), content);
+    });
+
+    // Array to hold the updated content IDs
+    const updatedContentIds = [];
+
+    // Iterate over the incoming contentsData
     for (const contentItem of contentsData) {
-      const contentDoc = new Content({
-        title: contentItem.title,
-        description: contentItem.description,
-        subject: subject._id,
-      });
-      await contentDoc.save();
-      subject.contents.push(contentDoc._id);
+      if (contentItem._id && existingContentsMap.has(contentItem._id)) {
+        // Update existing content
+        const existingContent = existingContentsMap.get(contentItem._id);
+        existingContent.title = contentItem.title;
+        existingContent.description = contentItem.description;
+        await existingContent.save();
+        updatedContentIds.push(existingContent._id);
+        // Remove from the map to identify contents to delete later
+        existingContentsMap.delete(contentItem._id);
+      } else {
+        // Create new content
+        const newContent = new Content({
+          title: contentItem.title,
+          description: contentItem.description,
+          subject: subject._id,
+        });
+        await newContent.save();
+        updatedContentIds.push(newContent._id);
+      }
     }
+
+    // Delete contents that were not included in the incoming contentsData
+    const contentsToDelete = Array.from(existingContentsMap.values());
+    for (const content of contentsToDelete) {
+      await Content.deleteOne({ _id: content._id });
+    }
+
+    // Update the subject's contents array
+    subject.contents = updatedContentIds;
 
     // Save updates to the subject
     await subject.save();

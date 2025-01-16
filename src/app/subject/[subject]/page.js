@@ -101,17 +101,10 @@ function SubjectPage() {
               );
 
               if (matchingExercises.length > 0) {
-                // Sort them by createdAt in descending order to get the latest first
-                const latestExercise = matchingExercises.sort(
-                  (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-                )[0];
-
-                const exerciseId = latestExercise._id;
-
                 return (
                   <Link
                     key={content._id}
-                    href={`/subject/${subject.url}/${exerciseId}`}
+                    href={`/subject/${subject.url}/${content._id}`}
                     className="content-item"
                   >
                     <div className="bg-white rounded shadow hover:-translate-y-1 transition-transform p-4">

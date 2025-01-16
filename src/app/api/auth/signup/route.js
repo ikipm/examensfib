@@ -1,4 +1,3 @@
-
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import connectToDatabase from "@/lib/db";
@@ -41,6 +40,13 @@ export async function POST(request) {
       username,
       email,
       password: hashedPassword,
+    });
+
+    // Login user
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
     });
 
     // Respond with success message (avoid sending sensitive data)

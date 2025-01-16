@@ -9,7 +9,7 @@ function ExercisePage() {
   const [solutionsVisible, setSolutionsVisible] = useState(false);
 
   const params = useParams();
-  const { subject, exerciseId } = params;
+  const { subject, contentId, exerciseId } = params;
   const router = useRouter();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ function ExercisePage() {
     };
 
     fetchExercise();
-  }, [subject, exerciseId]);
+  }, [exerciseId]);
 
   const handlePrevious = () => {
     if (exercise && exercise.previousId) {
@@ -133,9 +133,9 @@ function ExercisePage() {
             {solutionsVisible && (
               <div className="flex justify-center transition-opacity duration-500 ease-in-out ">
                 <img
-                  src={`/img/${exercise.subject.url}/solutions/${exerciseId}.png`}
+                  src={`/img/${exercise.subject.url}/answer/${exerciseId}.png`}
                   alt="Solution"
-                  className="w-full max-w-xl rounded-lg shadow-md"
+                  className="w-full max-w-2xl rounded-lg shadow-md"
                   draggable="false"
                 />
               </div>
@@ -148,7 +148,8 @@ function ExercisePage() {
             <button
               type="button"
               onClick={handlePrevious}
-              className="flex items-center text-white bg-red-600 hover:bg-red-700 
+              style={{ backgroundColor: exercise.subject.color || "#b32d2d" }}
+              className="flex items-center text-white
                          focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg 
                          text-sm py-3 px-6"
             >
@@ -174,7 +175,8 @@ function ExercisePage() {
             <button
               type="button"
               onClick={() => setSolutionsVisible(!solutionsVisible)}
-              className="flex items-center text-white bg-red-600 hover:bg-red-700 
+              style={{ backgroundColor: exercise.subject.color || "#b32d2d" }}
+              className="flex items-center text-white
                          focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg 
                          text-sm py-3 px-6"
             >
@@ -188,7 +190,8 @@ function ExercisePage() {
             <button
               type="button"
               onClick={handleNext}
-              className="flex items-center text-white bg-red-600 hover:bg-red-700 
+              style={{ backgroundColor: exercise.subject.color || "#b32d2d" }}
+              className="flex items-center text-white
                          focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg 
                          text-sm py-3 px-6"
             >
@@ -212,7 +215,7 @@ function ExercisePage() {
           </nav>
         </section>
       </main>
-      <AdminMenu mainButtonColor={subject.color} subjectUrl={subject.url} />
+      <AdminMenu subjectUrl={subject} exerciseId={exerciseId} />
     </div>
   );
 }
