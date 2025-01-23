@@ -4,8 +4,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import AdminMenu from "@/app/components/AdminMenu";
+import { useSession } from "next-auth/react";
 
 export default function SubjectPage() {
+  const { data: session } = useSession();
+  const isAdmin = session?.user?.permissions?.includes("admin");
+
   const [subject, setSubject] = useState(null);
   const [error, setError] = useState(null);
 
@@ -64,13 +68,13 @@ export default function SubjectPage() {
   }
 
   const matchingExercises = subject.exercises
-  .filter((exercise) => exercise.content === contentId)
-  .sort((a, b) => {
-    if (b.year !== a.year) {
-      return b.year - a.year;
-    }
-    return b.quarter - a.quarter;
-  });
+    .filter((exercise) => exercise.content === contentId)
+    .sort((a, b) => {
+      if (b.year !== a.year) {
+        return b.year - a.year;
+      }
+      return b.quarter - a.quarter;
+    });
 
   const content = subject.contents.find(
     (item) => item._id.toString() === contentId
@@ -103,11 +107,64 @@ export default function SubjectPage() {
         <h2 className="text-xl font-bold mb-6">{contentTitle}</h2>
         <div className="grid grid-cols-3 gap-6">
           {matchingExercises.map((exercise, index) => (
-            <Link key={index} href={`/subject/${subject.url}/${contentId}/${exercise._id}`}>
+            <Link
+              key={index}
+              href={`/subject/${subject.url}/${contentId}/${exercise._id}`}
+            >
               <div
                 key={index}
-                className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+                className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow relative"
               >
+                {isAdmin && (
+                  <button
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+
+                      if (
+                        confirm(`Delete ${exercise.year} Q${exercise.quarter}?`)
+                      ) {
+                        try {
+                          const response = await fetch(
+                            `/api/admin/exercises/delete/${exercise._id}`,
+                            {
+                              method: "POST",
+                            }
+                          );
+
+                          if (!response.ok) throw new Error("Delete failed");
+
+                          // Refresh the list after successful deletion
+                          setSubject((prev) => ({
+                            ...prev,
+                            exercises: prev.exercises.filter(
+                              (ex) => ex._id !== exercise._id
+                            ),
+                          }));
+                        } catch (err) {
+                          console.error("Delete error:", err);
+                          alert("Error deleting exercise");
+                        }
+                      }
+                    }}
+                    className="absolute top-2 right-2 p-1.5 rounded-full bg-gray-100/90 hover:bg-red-500/90 transition-colors duration-200 group focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                    aria-label="Delete exercise"
+                  >
+                    <svg
+                      className="w-4 h-4 text-gray-500 group-hover:text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                )}
                 <img
                   src={`/img/${subject.url}/exercise/${exercise._id}.png`}
                   alt={`Exercise ${exercise.year} Q${exercise.quarter}`}
