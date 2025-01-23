@@ -43,7 +43,7 @@ function App() {
         className="hero min-h-[80vh] bg-cover bg-center bg-no-repeat flex items-center justify-center text-center text-white relative"
         style={{
           backgroundImage:
-            "linear-gradient(135deg, rgba(255, 79, 79, 0.65), rgba(255, 145, 79, 0.65)), url('https://estatics-nasia.dtibcn.cat/nasia-pro/media/2016%2C12%2C01204146%2CEl-Campus-Nord-UPC-ciutat-universit%25C3%25A0ria.jpg')",
+            "linear-gradient(135deg, rgba(255, 79, 79, 0.65), rgba(255, 145, 79, 0.65)), url('/img/landing.jpg')",
         }}
       >
         <div className="max-w-2xl mx-4">
