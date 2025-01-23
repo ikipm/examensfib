@@ -57,7 +57,7 @@ export async function POST(request) {
       const statementFullPath = path.join(uploadExerciseFullDir, statementFileName);
       const exerciseBuffer = await exerciseImage.arrayBuffer();
       fs.writeFileSync(statementFullPath, Buffer.from(exerciseBuffer));
-      statementPath = `${uploadExerciseDir}${statementFileName}`;
+      statementPath = `/img/${subject.url}/exercise/${statementFileName}`;
     }
 
     let answerPath = "";
@@ -67,7 +67,7 @@ export async function POST(request) {
       const answerFullPath = path.join(uploadAnswerFullDir, answerFileName);
       const answerBuffer = await solutionImage.arrayBuffer();
       fs.writeFileSync(answerFullPath, Buffer.from(answerBuffer));
-      answerPath = `${uploadAnswerDir}${answerFileName}`;
+      answerPath = `/img/${subject.url}/answer/${answerFileName}`;
     }
 
     savedExercise.statement = statementPath;
