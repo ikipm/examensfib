@@ -3,12 +3,9 @@
 import { useState, useEffect } from "react";
 
 export default function Add() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    // Initialize the modal open state only once when the component mounts
-    setIsOpen(Math.floor(Math.random() * 30) === 5);
-  }, []);
+  const [isOpen, setIsOpen] = useState(
+    () => Math.floor(Math.random() * 3) === 2
+  );
 
   if (!isOpen) return null;
 

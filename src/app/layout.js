@@ -2,7 +2,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/NavBar";
 import Footer from "./components/Footer";
-import Add from "./components/Add";
+import ClientSideAdd from "./components/ClientSideAdd";
 import { SessionWrapper } from "./components/SessionWrapper";
 import 'flowbite';
 
@@ -25,7 +25,7 @@ export default function RootLayout({ children, session }) {
         <SessionWrapper session={session}>
           <Navbar />
           <main className="flex-grow">{children}</main>
-          <Add />
+          <ClientSideAdd />
         </SessionWrapper>
         <Footer />
       </body>
