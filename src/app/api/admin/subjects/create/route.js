@@ -27,7 +27,7 @@ export async function POST(request) {
 
         const uploadDir = path.join(process.cwd(), `/public/img/${url}/`);
 
-        /*if (!fs.existsSync(uploadDir)) {
+        if (!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir, { recursive: true });
         }
 
@@ -39,7 +39,7 @@ export async function POST(request) {
             const arrayBuffer = await iconFile.arrayBuffer();
             fs.writeFileSync(newPath, Buffer.from(arrayBuffer));
             iconPath = `/img/${url}/${url}${fileExt}`;
-        }*/
+        }
 
         const subject = new Subject({
             name,
