@@ -25,7 +25,7 @@ export default function RootLayout({ children, session }) {
         <SessionWrapper session={session}>
           <Navbar />
           <main className="flex-grow">{children}</main>
-          <ClientSideAdd />
+          <!--<ClientSideAdd />-->
         </SessionWrapper>
         <Footer />
       </body>
