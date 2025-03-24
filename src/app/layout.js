@@ -18,6 +18,7 @@ export const metadata = {
   description: "Tots els exàmens de la FIB en un sol lloc",
 };
 
+/*To show the add: <ClientSideAdd />*/
 export default function RootLayout({ children, session }) {
   return (
     <html lang="ca" className="h-full">
@@ -25,7 +26,6 @@ export default function RootLayout({ children, session }) {
         <SessionWrapper session={session}>
           <Navbar />
           <main className="flex-grow">{children}</main>
-          <!--<ClientSideAdd />-->
         </SessionWrapper>
         <Footer />
       </body>
